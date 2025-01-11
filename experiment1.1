@@ -1,31 +1,38 @@
 Experiment 1.1 :
-Create a class Animal with a method makeSound() that outputs a generic sound.The class should further contain derived classes Dog and Cat that override the makeSound()
+Aim : Create a class Animal with a method makeSound() that outputs a generic sound.The class should further contain derived classes Dog and Cat that override the makeSound()
 method to output specific sounds for each animal. Demonstrate polymorphism by creating an Animal reference that can hold objects of both Dog and Cat, and call the overridden 
 makeSound() method at runtime.
 
 Program 1.1:
+class Animal {
+    public void makeSound() {
+        System.out.println("Some generic animal sound");
+    }
+class Dog extends Animal {
+    @Override
+    public void makeSound() {
+        System.out.println("Woof!");
+    }
+}
+class Cat extends Animal {
+    @Override
+    public void makeSound() {
+        System.out.println("Meow!");
+    }
+}
+public class Main {
+    public static void animalSound(Animal animal) {
+        animal.makeSound();
+    }
 
-class Animal:
-    def makeSound(self):
-        print("Some generic animal sound")
+    public static void main(String[] args) {
+        Dog dog = new Dog();
+        Cat cat = new Cat();
 
-
-class Dog(Animal):
-    def makeSound(self):
-        print("Woof!")
-
-
-class Cat(Animal):
-    def makeSound(self):
-        print("Meow!")
-
-def animalSound(animal: Animal):
-    animal.makeSound()
-
-
-dog = Dog()
-cat = Cat()
-
-
-animalSound(dog)  # Outputs: Woof!
-animalSound(cat)  # Outputs: Meow!
+        animalSound(dog);  
+        animalSound(cat);  
+    }
+}
+OUTPUT:
+Woof!
+Meow!
