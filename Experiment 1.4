@@ -1,0 +1,87 @@
+Experiment 1.4: Design a program for a basic banking system that calculates the average account balance by dividing the total balance by the number of account holders and verifies transaction
+IDs from an array. The program should demonstrate robust exception handling using multiple try-catch blocks to manage two specific scenarios: an ArithmeticException for division by 
+zero when there are no account holders and an ArrayIndexOutOfBoundsException for accessing invalid indices in the transaction ID array.
+Program :
+import java.util.Scanner;
+
+class BankAccount {
+    private String accountHolderName;
+    private double balance;
+
+    public BankAccount(String accountHolderName, double balance) {
+        this.accountHolderName = accountHolderName;
+        this.balance = balance;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public String getAccountHolderName() {
+        return accountHolderName;
+    }
+}
+
+class BankingSystem {
+    private BankAccount[] accounts;
+    private String[] transactionIDs;
+
+    public BankingSystem(BankAccount[] accounts, String[] transactionIDs) {
+        this.accounts = accounts;
+        this.transactionIDs = transactionIDs;
+    }
+
+    public double calculateAverageBalance() throws ArithmeticException {
+        if (accounts.length == 0) {
+            throw new ArithmeticException("No account holders available to calculate average balance.");
+        }
+        double totalBalance = 0;
+        for (BankAccount account : accounts) {
+            totalBalance += account.getBalance();
+        }
+        return totalBalance / accounts.length;
+    }
+
+    public String verifyTransactionID(int index) throws ArrayIndexOutOfBoundsException {
+        return transactionIDs[index];
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        BankAccount[] accounts = {
+            new BankAccount("Garima", 1500.00),
+            new BankAccount("Shivam", 2500.00),
+            new BankAccount("mahendru", 3000.00)
+        };
+
+        String[] transactionIDs = {"10738", "11236", "2654"};
+
+        BankingSystem bankingSystem = new BankingSystem(accounts, transactionIDs);
+
+        try {
+            double averageBalance = bankingSystem.calculateAverageBalance();
+            System.out.println("Average Account Balance: $" + averageBalance);
+        } catch (ArithmeticException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+     
+        System.out.print("Enter transaction ID index to verify (0-2): ");
+        int index = scanner.nextInt();
+        try {
+            String transactionID = bankingSystem.verifyTransactionID(index);
+            System.out.println("Transaction ID: " + transactionID);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Error: Invalid transaction ID index. " + e.getMessage());
+        }
+
+        scanner.close();
+    }
+}
+//OUTPUT:
+//Average Account Balance: $2000.0
+//Enter transaction ID index to verify (0-2): 1
+//Transaction ID: 10738
